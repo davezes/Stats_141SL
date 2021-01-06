@@ -15,13 +15,14 @@ xbool_save_file <- FALSE
 ############# SIMULATION
 ############# try comparing this result with that using G*Power
 
-set.seed(777)
+## set.seed(777)
 
 nn <- 10^6
 
 H0mu <- 50/100
 xmu <- 64/100 ######## true p heads
 n <- 200
+
 
 xtestvals <- rep(NA, nn)
 
@@ -44,8 +45,13 @@ mean(xtestvals)
 
 cat("est of noncentrality parameter, lambda:", mean(xtestvals) - 1, "\n")
 
-
 hist(xtestvals)
+
+
+
+##### what is this?
+xw <- sqrt( (mean(xtestvals)-1) / n ) ; xw
+### note that for 2-cells, this is approximately 2 * abs(xmu - H0mu)
 
 
 xalpha <- 0.01 #### here

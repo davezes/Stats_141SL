@@ -28,6 +28,9 @@ x2dom <- c("c", "d")
 x1 <- rep(x1dom, each=n/length(x1dom))
 x2 <- rep(x2dom, n/length(x2dom))
 
+table(x1, x2)
+
+
 xAmask <- x1 %in% c("A")
 xBmask <- x1 %in% c("B")
 xCmask <- x1 %in% c("C")
@@ -105,7 +108,7 @@ mean(xfvals)
 hist(xfvals)
 
 
-xalpha <- 0.05 #### here
+xalpha <- 0.01 #### here
 
 fcut <-  qf(xalpha, df1=3, df2=96, lower.tail=FALSE) ; fcut
 

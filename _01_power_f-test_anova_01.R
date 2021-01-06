@@ -28,6 +28,10 @@ x2dom <- c("c", "d")
 x1 <- rep(x1dom, each=n/length(x1dom))
 x2 <- rep(x2dom, n/length(x2dom))
 
+
+table(x1, x2)
+
+
 xAmask <- x1 %in% c("A")
 xBmask <- x1 %in% c("B")
 

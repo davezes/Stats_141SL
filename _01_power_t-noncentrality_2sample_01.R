@@ -43,6 +43,10 @@ for(ii in 1:nn) {
     
 }
 
+###### is this 2 sample independent or matched pairs?
+
+
+
 mean(xtvals)
 
 hist(xtvals)
