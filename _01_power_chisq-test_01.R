@@ -31,6 +31,7 @@ for(ii in 1:nn) {
     
     ee1 <- H0mu * n ; ee1
     ee2 <- (1-H0mu) * n ; ee2
+    
     testval <- (x - ee1)^2/ee1 + (n-x - ee2)^2/ee2 ; testval ### correct
     
     xtestvals[ii] <- testval
@@ -46,9 +47,6 @@ cat("est of noncentrality parameter, lambda:", mean(xtestvals) - 1, "\n")
 
 hist(xtestvals)
 
-xw <- 2 * (xmu - H0mu) ; xw
-
-#noncent <- cohensd * sqrt(n) ; noncent ### use this value for non-centrality parameter in G*Power
 
 xalpha <- 0.01 #### here
 
