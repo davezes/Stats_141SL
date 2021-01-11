@@ -80,28 +80,33 @@ for(ii in 1:nn) {
     sum(xCmask) * ( yCmean - ybargrand )^2 +
     sum(xDmask) * ( yDmean - ybargrand )^2     ; SSb
     
-    SSe <-
+    SSw <-
     sum( (y[ xAmask ] - yAmean)^2 ) +
     sum( (y[ xBmask ] - yBmean)^2 ) +
     sum( (y[ xCmask ] - yCmean)^2 ) +
-    sum( (y[ xDmask ] - yDmean)^2 )    ; SSe
+    sum( (y[ xDmask ] - yDmean)^2 )    ; SSw
     
     
     SStot <- sum( (y - ybargrand)^2 ) ; SStot
-    SSb + SSe
+    SSb + SSw
     
     MSb <- SSb / (4-1)
-    MSe <- SSe / (n-4)
+    MSw <- SSw / (n-4)
     
     #### s2pooled <- ((n1-1)*var(x1) + (n2-1)*var(x2)) / (n1 + n2 - 2)
     
-    fval <- MSb / MSe
+    fval <- MSb / MSw
     
     xfvals[ii] <- fval
     
 }
 
 #### MSb / MStot
+
+#### non-centrality
+xlambda <- sum( c( H0ABdelta/2, -H0ABdelta/2, 0, 0 )^2 ) / ( xsigma^2 / 25) ; xlambda
+
+
 
 mean(xfvals)
 

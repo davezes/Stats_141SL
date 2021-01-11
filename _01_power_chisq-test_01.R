@@ -23,6 +23,9 @@ H0mu <- 50/100
 xmu <- 64/100 ######## true p heads
 n <- 200
 
+ee1 <- H0mu * n ; ee1
+ee2 <- (1-H0mu) * n ; ee2
+
 
 xtestvals <- rep(NA, nn)
 
@@ -30,8 +33,7 @@ for(ii in 1:nn) {
     
     x <- rbinom(1, size=n, prob=xmu) ; x
     
-    ee1 <- H0mu * n ; ee1
-    ee2 <- (1-H0mu) * n ; ee2
+
     
     testval <- (x - ee1)^2/ee1 + (n-x - ee2)^2/ee2 ; testval ### correct
     

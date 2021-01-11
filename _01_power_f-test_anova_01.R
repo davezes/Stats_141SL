@@ -51,6 +51,8 @@ c(-H0ABdelta / 2, H0ABdelta / 2, 0)
 )
 xsigB
 
+
+
 ##### same as
 ##### sqrt( sum( c(-H0ABdelta / 2, H0ABdelta / 2)^2 ) / 2 )
 
