@@ -22,15 +22,19 @@ x1 <- rep(x1dom, each=60)
 
 x2 <-
 c(
+### distribution of yes/no for Group A
 rep("yes", 30),
 rep("no", 30),
 
+### distribution of yes/no for Group B
 rep("yes", 20),
 rep("no", 40),
 
+### distribution of yes/no for Group C
 rep("yes", 10),
 rep("no", 50),
 
+### distribution of yes/no for Group D
 rep("yes", 55),
 rep("no", 5)
 )
@@ -43,7 +47,7 @@ table(x1, x2)
 ybin <- as.integer(x2 %in% "yes") ; ybin
 
 xdf <- data.frame("y"=ybin, "x"=x1)
-
+xdf
 
 xglm <- glm(y~x, data=xdf, family=binomial(link="logit"))
 
