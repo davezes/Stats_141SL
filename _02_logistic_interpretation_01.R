@@ -11,11 +11,6 @@ source("___f_funs.R")
 xbool_save_file <- FALSE
 
 
-############# simple two-way ANOVA F-test
-############# SIMULATION
-############# try comparing this result with that using G*Power
-
-###set.seed(777)
 
 
 n <- 240 ### must be divisible by total number of groups
