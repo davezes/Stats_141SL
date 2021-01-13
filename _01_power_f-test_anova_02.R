@@ -48,7 +48,7 @@ H0ABdelta <- 1 / xsigma #####
 
 xsigB <-
 sd(
-c(-H0ABdelta / 2, H0ABdelta / 2, 0, 0, 0)
+c(H0ABdelta / 2, -H0ABdelta / 2, 0, 0, 0)
 )
 
 ff <- xsigB / xsigma ; ff ### f in G*Power

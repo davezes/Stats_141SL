@@ -23,8 +23,8 @@ x1 <- rep(x1dom, each=60)
 x2 <-
 c(
 ### distribution of yes/no for Group A
-rep("yes", 30),
-rep("no", 30),
+rep("yes", 35),
+rep("no", 25),
 
 ### distribution of yes/no for Group B
 rep("yes", 20),
@@ -57,11 +57,12 @@ summary(xglm)
 
 log( (30/60) / (30/60) ) ### for-total for A, divided by against-total for A
 
-log( (20/40) / (30/30) ) ### for-against for B, divided by for-against for A
+log( (20/40) / (35/25) ) ### for-against for B, divided by for-against for A
 
-log( (10/50) / (30/30) ) ### for-against for C, divided by for-against for A
+log( (10/50) / (35/25) ) ### for-against for C, divided by for-against for A
 
-log( (55/5) / (30/30) ) ### for-against for D, divided by for-against for A
+log( (55/5) / (35/25) ) ### for-against for D, divided by for-against for A
+
 
 
 
