@@ -11,7 +11,7 @@ xbool_save_file <- FALSE
 
 set.seed(777)
 
-n <- 700
+n <- 1000
 
 probCOs <- c(0, 0.2, 0.4, 0.6, 0.8, 1)
 ordinalDom <- c(1, 2, 3, 4, 5)
@@ -21,6 +21,11 @@ actualProbs <- runif(n, 0, 1)
 xndx <- findInterval(actualProbs, probCOs)
 
 y <- as.factor(ordinalDom[ xndx ])
+
+table(y)
+###### keep in mind that y is 'ranked'
+###### if someone lands in the 'top' group . . .
+###### what percentile are they ?
 
 xpolr <- polr(y ~ 1)
 summary(xpolr)
@@ -73,3 +78,18 @@ xxcoef <- summary(xpolr)$coefficients[ "x", "Value" ]
 1 / (1 + exp(-xxcoef * (+1)))
 
 
+
+############# make some predictions
+
+xdf <- data.frame(y, x)
+
+xpolr <- polr(y ~ x, data=xdf)
+summary(xpolr)
+
+xdf0 <- data.frame("y"=NA, "x"=10)
+predict(xpolr, newdata=xdf0)
+
+
+
+xdf0 <- data.frame("y"=NA, "x"=-10)
+predict(xpolr, newdata=xdf0)
