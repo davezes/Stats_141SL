@@ -62,9 +62,9 @@ xSE_hats
 ))
 
 
-t_score <- b_hat / xSE_hats ; t_score
+z_score <- b_hat / xSE_hats ; z_score
 
-p_vals <- 2 * pnorm( - abs(t_score) ) ; p_vals
+p_vals <- 2 * pnorm( - abs(z_score) ) ; p_vals
 
 summary(xglm)
 

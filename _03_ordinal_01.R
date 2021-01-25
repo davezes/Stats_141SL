@@ -7,14 +7,43 @@ library(MASS)
 xbool_save_file <- FALSE
 
 
-
-
 set.seed(777)
+
+
+########## two cats
+
+n <- 1000
+
+probCOs <- c(0, 0.5, 1)
+ordinalDom <- c(0, 1)
+
+actualProbs <- runif(n, 0, 1)
+
+xndx <- findInterval(actualProbs, probCOs)
+
+y <- as.factor(ordinalDom[ xndx ])
+
+table(y)
+###### keep in mind that y is 'ranked'
+###### if someone lands in the 'top' group . . .
+###### what percentile are they ?
+
+xpolr <- polr(y ~ 1)
+summary(xpolr)
+
+############# ???
+
+
+
+
+#####################
 
 n <- 1000
 
 probCOs <- c(0, 0.2, 0.4, 0.6, 0.8, 1)
 ordinalDom <- c(1, 2, 3, 4, 5)
+
+ordinalDom <- c("a Very Unawesome", "b Somewhat Unawesome", "c Neutral", "d Somewhat Awesome", "e Very Awesome")
 
 actualProbs <- runif(n, 0, 1)
 
@@ -37,6 +66,14 @@ xx <- summary(xpolr)$coefficients[ , "Value" ]
 
 xx <- summary(xpolr)$zeta
 1 / (1 + exp(-xx))
+
+
+################### stop here
+################### stop here
+################### stop here
+################### stop here
+################### stop here
+################### stop here
 
 
 
