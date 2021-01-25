@@ -43,7 +43,7 @@ n <- 1000
 probCOs <- c(0, 0.2, 0.4, 0.6, 0.8, 1)
 ordinalDom <- c(1, 2, 3, 4, 5)
 
-ordinalDom <- c("a Very Unawesome", "b Somewhat Unawesome", "c Neutral", "d Somewhat Awesome", "e Very Awesome")
+ordinalDom <- c("a Not at all Awesome", "b Somewhat Unawesome", "c Neutral", "d Somewhat Awesome", "e Very Awesome")
 
 actualProbs <- runif(n, 0, 1)
 
