@@ -15,7 +15,7 @@ set.seed(777)
 n <- 1000
 
 probCOs <- c(0, 0.5, 1)
-ordinalDom <- c(0, 1)
+ordinalDom <- c("a Unawesome", "b Awesome")
 
 actualProbs <- runif(n, 0, 1)
 
