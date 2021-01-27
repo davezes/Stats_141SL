@@ -14,16 +14,17 @@ set.seed(777)
 
 xsigma <- 1
 
-n <- 100
+n <- 20
+
 
 xrndAssignDom <- c("Control", "Tx")
 
 H0delta <- 0
-HtrueDelta <- 0.4
+HtrueDelta <- 1
 
 
 
-nn <- 100000
+nn <- 500000
 
 
 
@@ -62,7 +63,7 @@ for(i in 1:nn) {
 }
 
 
-tcrit <- quantile(xtvals_null, 0.99) ; tcrit
+tcrit <- quantile(xtvals_null, 0.99, na.rm=TRUE) ; tcrit
 
 if(xbool_save_file) {
     png(file.path("~", "Desktop", "t_power_trueRandomAssignment_01.png"), width=1000, height=1000, pointsize=24)
@@ -76,14 +77,14 @@ hist(xtvals_true, xlim=xlims)
 abline(v=tcrit, col="#FF3333", lwd=3)
 if(xbool_save_file) { dev.off() }
 
-cat("True Random Assignment Power: ", sum(xtvals_true > tcrit) / nn, "\n")
+cat("Sim True-Random Assignment Power: ", sum(xtvals_true > tcrit, na.rm=TRUE) / nn, "\n")
 
 
 
 
 
 
-########## non-fully random assignment -- 50 each
+########## non-fully random assignment -- n / 2
 
 xtvals_null <- rep(NA, nn)
 xtvals_true <- rep(NA, nn)
@@ -95,8 +96,8 @@ for(i in 1:nn) {
     maskC <- x %in% c("Control")
     maskTx <- x %in% c("Tx")
     
-        nC <- sum(maskC)
-        nTx <- sum(maskTx)
+    nC <- sum(maskC)
+    nTx <- sum(maskTx)
     
     y_null <- numeric(n)
     y_null[ maskC ] <- rnorm(nC, 0, xsigma)
@@ -119,7 +120,7 @@ for(i in 1:nn) {
     
 }
 
-tcrit <- quantile(xtvals_null, 0.99) ; tcrit
+tcrit <- quantile(xtvals_null, 0.99, na.rm=TRUE) ; tcrit
 
 if(xbool_save_file) {
     png(file.path("~", "Desktop", "t_power_semiRandomAssignment_01.png"), width=1000, height=1000, pointsize=24)
@@ -134,7 +135,7 @@ abline(v=tcrit, col="#FF3333", lwd=3)
 if(xbool_save_file) { dev.off() }
 
 
-cat("'Semi' Random Assignment Power: ", sum(xtvals_true > tcrit) / nn, "\n")
+cat("Sim 'Semi-Random' Assignment Power: ", sum(xtvals_true > tcrit, na.rm=TRUE) / nn, "\n")
 
 
 
