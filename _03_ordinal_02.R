@@ -70,28 +70,34 @@ Js <- c(1,2,3,4)
 
 #################
 x0 <- -1
-y_star <- x0 * xxcoef - xx[ Js ] ; y_star
-1 / ( 1 + exp( -y_star ) )
+y_star_m1 <- x0 * xxcoef - xx[ Js ] ; y_star_m1
+1 / ( 1 + exp( -y_star_m1 ) )
 
 
 
 x0 <- 0
-y_star <- x0 * xxcoef - xx[ Js ] ; y_star
-1 / ( 1 + exp( -y_star ) )
+y_star_z <- x0 * xxcoef - xx[ Js ] ; y_star_z
+1 / ( 1 + exp( -y_star_z ) )
 
 ####  table(x > -0.3 & x < 0.3, y) ## just for fun
 
 
 
 x0 <- +1
-y_star <- x0 * xxcoef - xx[ Js ]  ; y_star
-1 / ( 1 + exp( -y_star ) )
+y_star_p1 <- x0 * xxcoef - xx[ Js ]  ; y_star_p1
+1 / ( 1 + exp( -y_star_p1 ) )
 
 
 
 ##############
 
 ( 1 * xxcoef - xx[ Js ] ) - ( 0 * xxcoef - xx[ Js ] )
+
+
+log( 1 / ( 1 + exp( -y_star_z ) ) ) - log( 1 - 1 / ( 1 + exp( -y_star_z ) ) )
+
+
+log( 1 / ( 1 + exp( -y_star_p1 ) ) ) - log( 1 - 1 / ( 1 + exp( -y_star_p1 ) ) )
 
 
 ##############################
