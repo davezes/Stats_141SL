@@ -30,7 +30,7 @@ y <- ordinalDom[ xndx ]
 table(y)
 
 table(y) / n
-
+`
 y <- as.factor(y)
 
 
@@ -38,7 +38,7 @@ y <- as.factor(y)
 table(x > 0, y)
 
 
-
+`
 
 xpolr <- polr(y ~ 1)
 summary(xpolr)

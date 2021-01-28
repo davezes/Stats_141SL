@@ -79,13 +79,27 @@ xx <- summary(xpolr)$zeta
 
 ##################################### with numeric predictor
 
-x <- qnorm(actualProbs)
+set.seed(777)
 
-y <- x + rnorm(n)
+n <- 1000
 
-y <- floor((y - min(y)) * (5 / diff(range(y)))) + 1
+probCOs <- c(-Inf, -1, -0.3, 0.3, 1, Inf)
+
+ordinalDom <- c("aNotAtAllAwesome", "bSomewhatUnawesome", "cNeutral", "dSomewhatAwesome", "eVeryAwesome")
+
+x <- rnorm(n, 0, 1)
+
+xvals <- x + rnorm(n, 0, 1/2)
+
+xndx <- findInterval(xvals, probCOs)
+
+y <- ordinalDom[ xndx ]
+
+
+
 table(y)
 
+table(y) / n
 
 y <- as.factor(y)
 
@@ -95,12 +109,65 @@ xx <- summary(xpolr)$zeta
 1 / (1 + exp(-xx))
 
 
-xpolr <- polr(y ~ x)
-summary(xpolr)
+xpolr2 <- polr(y ~ x)
+summary(xpolr2)
 
 
-xx <- summary(xpolr)$zeta
-1 / (1 + exp(-xx))
+xxcoef <- summary(xpolr2)$coefficients[ "x", "Value" ] ; xxcoef
+xx <- summary(xpolr2)$zeta ; xx
+
+################################# examples
+
+########## what is the interpretation of the x coef ?????
+########## FAILURE!
+
+x0 <- 0
+1 / (1 + exp(- ( xx - x0 * xxcoef ) ) )
+
+
+
+x0 <- -1
+1 / (1 + exp( - ( xx - x0 * xxcoef ) ) )
+
+
+x0 <- +1
+1 / (1 + exp(- ( xx - x0 * xxcoef ) ) )
+
+
+
+###### Pr( Y > 1 | x = x0 ) / Pr( Y <= 1 | x = x0 ) = exp( x0 * xxcoef ) / exp( xx[1] )
+
+xsplit <- c(1,2,3,4)
+
+
+#################
+x0 <- -1
+exp( x0 * xxcoef ) / exp( xx[ xsplit ] )
+
+y_star <- log( exp( x0 * (xxcoef) ) / exp( xx[ xsplit ] ) ) ; y_star
+
+1 / (1 + exp( y_star ) )
+
+#### Cf
+1 / (1 + exp( - ( xx - x0 * xxcoef ) ) )
+
+
+
+
+
+x0 <- +1
+exp( x0 * xxcoef ) / exp( xx[ xsplit ] )
+
+y_star <- log( exp( x0 * (xxcoef) ) / exp( xx[ xsplit ] ) ) ; y_star
+
+1 / (1 + exp( y_star ) )
+
+#### Cf
+1 / (1 + exp( - ( xx - x0 * xxcoef ) ) )
+
+
+
+
 
 
 xxcoef <- summary(xpolr)$coefficients[ "x", "Value" ]
@@ -115,18 +182,21 @@ xxcoef <- summary(xpolr)$coefficients[ "x", "Value" ]
 1 / (1 + exp(-xxcoef * (+1)))
 
 
+### names(summary(xpolr))
+
+
 
 ############# make some predictions
 
 xdf <- data.frame(y, x)
 
-xpolr <- polr(y ~ x, data=xdf)
-summary(xpolr)
+xpolrP <- polr(y ~ x, data=xdf)
+summary(xpolrP)
 
-xdf0 <- data.frame("y"=NA, "x"=10)
-predict(xpolr, newdata=xdf0)
+xdf0 <- data.frame("y"=NA, "x"=-1)
+predict(xpolrP, newdata=xdf0)
 
 
 
-xdf0 <- data.frame("y"=NA, "x"=-10)
-predict(xpolr, newdata=xdf0)
+xdf0 <- data.frame("y"=NA, "x"=1)
+predict(xpolrP, newdata=xdf0)
