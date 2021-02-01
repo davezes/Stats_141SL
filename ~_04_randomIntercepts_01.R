@@ -4,17 +4,17 @@ options(stringAsFactor=FALSE, width=300)
 
 library(lme4)
 
-xbool_save_file <- FALSE
+xbool_save_file <- TRUE
 
 
-n <- 100
+n <- 200
 
 set.seed(777)
 
-xid <- rep( I(1:50), each=2 )
+xid <- rep( I(1:(n/2)), each=2 )
 
 xtxdom <- c("Before", "xAfter")
-xrepmeas <- rep( xtxdom, 50 )
+xrepmeas <- rep( xtxdom, n/2 )
 
 xmeasureInd <- c(0, 1)[ match(xrepmeas, xtxdom) ]
 
@@ -26,7 +26,7 @@ xmeasureInd <- c(0, 1)[ match(xrepmeas, xtxdom) ]
  #### true standard deviation of random effect
 #### try different values
 xsigRndEff <- 2/3
-indiv_intercept <- rep(rnorm(50, 0, xsigRndEff), each=2)
+indiv_intercept <- rep(rnorm(n/2, 0, xsigRndEff), each=2)
 
 xerrs <- rnorm(n)
 
@@ -40,7 +40,7 @@ xdf <- data.frame("id"=as.character(xid), "measure"=xrepmeas, "y"=y_true)
 
 
 
-xpalette <- rep(rainbow(70)[1:50], each=2)
+xpalette <- rep(rainbow(n)[1:(n/2)], each=2)
 
 ydf <- xdf
 ydf[ , "measure"] <- c(0, 1)[ match(xdf[ , "measure"], c("Before", "xAfter")) ]

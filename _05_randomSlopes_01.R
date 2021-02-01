@@ -30,7 +30,7 @@ indiv_slope <- rep(rnorm(20, 0, xsigRndEff), each=3)
 
 xerrs <- rnorm(n, 0, 1.0)
 
-indiv_intercept <- 0.5 ##### fixed slope
+indiv_intercept <- 0.5 ##### fixed intercept
 
 xbeta <- 0.5
 
