@@ -26,15 +26,14 @@ xmeasureInd <- c(0, 1)[ match(xrepmeas, xtxdom) ]
  #### true standard deviation of random effect
 #### try different values
 xsigRndEff <- 2/3
-
-xsigRndEff <- 10
+xsigRndEff <- 10 #### more pronounced
 
 indiv_intercept <- rep(rnorm(n/2, 0, xsigRndEff), each=2)
 
 xerrs <- rnorm(n)
 
 xbeta <- 0.5 ##### fixed slope
-xbeta <- 5 ##### fixed slope
+xbeta <- 5 ##### fixed slope #### more pronounced
 
 
 
@@ -54,6 +53,17 @@ ydf[ , "measure"] <- c(0, 1)[ match(xdf[ , "measure"], c("Before", "xAfter")) ]
 
 ########### look at data set
 head(ydf, 10)
+
+
+
+####################### plot points
+
+if(xbool_save_file) {
+    png(file.path("~", "Desktop", "randomIntDataSimIntsDataOnly_01.png"), width=1000, height=1000, pointsize=24)
+}
+plot( ydf[ , "measure"],  ydf[ , "y"], col=xpalette, cex=3, lwd=7, ylab="y", xlab="Tx (0=Before, 1=After)", main="Standardized Muscle Mass Increase ~vs~ Tx")
+text(x=0.1, y=ydf[ seq(1, n, by=2), "y" ], ydf[ seq(1, n, by=2), "id" ] )
+if(xbool_save_file) { dev.off() }
 
 
 
@@ -91,15 +101,16 @@ ranef(xlmer)$id + xfixed_intercept
 if(xbool_save_file) {
     png(file.path("~", "Desktop", "randomIntDataSimInts_01.png"), width=1000, height=1000, pointsize=24)
 }
-plot( ydf[ , "measure"],  ydf[ , "y"], col=xpalette, cex=3, lwd=4, ylab="y", xlab="Measure (0=Before, 1=After)")
+plot( ydf[ , "measure"],  ydf[ , "y"], col=xpalette, cex=3, lwd=7, ylab="y", xlab="Tx (0=Before, 1=After)", main="Standardized Muscle Mass Increase ~vs~ Tx")
 for(i in 1:(nrow(ydf)/2)) {
-    segments(x0=0, y0=xxu[i], x1=1, y1=xxu[i] + 1*xfixed_slope, col=xpalette[i*2-1], lwd=4)
+    segments(x0=0, y0=xxu[i], x1=1, y1=xxu[i] + 1*xfixed_slope, col=xpalette[i*2-1], lwd=7)
 }
 if(xbool_save_file) { dev.off() }
 
 
 
 
+####################### ignore id
 xlm2 <- lm(y ~ measure, data=xdf)
 summary(xlm2)
 
@@ -108,7 +119,7 @@ summary(xlm2)
 if(xbool_save_file) {
     png(file.path("~", "Desktop", "constantIntDataSim_01.png"), width=1000, height=1000, pointsize=24)
 }
-plot( ydf[ , "measure"],  ydf[ , "y"], col="#333333", cex=3, lwd=4, ylab="y", xlab="Measure (0=Before, 1=After)")
+plot( ydf[ , "measure"],  ydf[ , "y"], col="#333333", cex=3, lwd=4, ylab="y", xlab="Tx (0=Before, 1=After)", main="Standardized Muscle Mass Increase ~vs~ Tx")
 abline(xlm2, lwd=4)
 if(xbool_save_file) { dev.off() }
 

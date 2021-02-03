@@ -4,17 +4,17 @@ options(stringAsFactor=FALSE, width=300)
 
 library(lme4)
 
-xbool_save_file <- FALSE
+xbool_save_file <- TRUE
 
 
-n <- 60
+n <- 15 #### must be an integer multiple of 3
 
-set.seed(777)
+set.seed(778)
 
-xid <- rep( I(1:20), each=3 )
+xid <- rep( I(1:(n/3)), each=3 )
 
 xtxdom <- c(1, 2, 3)
-xrepmeas <- rep( xtxdom, 20 )
+xrepmeas <- rep( xtxdom, n/3 )
 
 xmeasureInd <- xtxdom
 
@@ -25,14 +25,14 @@ xmeasureInd <- xtxdom
 
  #### true standard deviation of random effect
 #### try different values
-xsigRndEff <- 2/3
-indiv_slope <- rep(rnorm(20, 0, xsigRndEff), each=3)
+xsigRndEff <- 1
+indiv_slope <- rep(rnorm(n/3, 0, xsigRndEff), each=3)
 
 xerrs <- rnorm(n, 0, 1.0)
 
-indiv_intercept <- 0.5 ##### fixed intercept
+indiv_intercept <- 1.0 ##### fixed intercept
 
-xbeta <- 0.5
+xbeta <- 1
 
 y_true <- indiv_intercept + xbeta * xmeasureInd +    indiv_slope * xmeasureInd + xerrs
 
@@ -42,17 +42,68 @@ xdf <- data.frame("id"=as.character(xid), "measure"=xrepmeas, "y"=y_true)
 
 
 
-xpalette <- rep(rainbow(40)[1:20], each=3)
+xpalette <- rep(rainbow(2*n/3)[1:(n/3)], each=3)
+
+xpalette <- rep(rainbow(n/3), each=3)
 
 ydf <- xdf
+
+ydf
+
+
+if(xbool_save_file) {
+    png(file.path("~", "Desktop", "randomSlopeDataSimDataOnly_01.png"), width=1000, height=1000, pointsize=24)
+}
+plot( ydf[ , "measure"],  ydf[ , "y"], col=xpalette, cex=3, lwd=7, ylab="y", xlab="Measure")
+if(xbool_save_file) { dev.off() }
+
+
+
+
+
+xlmer <- lmer(y ~ measure + ( measure | id ), data=ydf)
+## xlmer <- lmer(y ~ ( measure | id ), data=ydf) #### this assumes beta (the constant slope center) is zero
+summary(xlmer)
+#anova(xlmer)
+
+
+
+
+
+
+
+summary(xlmer)$coefficients
+
+xfixed_slope <- summary(xlmer)$coefficients[ 2, 1 ] ; xfixed_slope
+
+xfixed_intercept <- summary(xlmer)$coefficients[ 1, 1 ] ; xfixed_intercept
+
+########## is it possible to recover actual fitted intercepts ????
+
+########## YES!
+
+coef(xlmer)$id
+xxu <- coef(xlmer)$id[ , "measure"] ; xxu
+
+########### or, alternately
+ranef(xlmer)$id[ , "measure"] + xfixed_slope
+
+
+
+
+
+
 
 
 if(xbool_save_file) {
     png(file.path("~", "Desktop", "randomSlopeDataSim_01.png"), width=1000, height=1000, pointsize=24)
 }
-plot( ydf[ , "measure"],  ydf[ , "y"], col=xpalette, cex=3, lwd=4, ylab="y", xlab="Measure")
+plot( ydf[ , "measure"],  ydf[ , "y"], col=xpalette, cex=3, lwd=7, ylab="y", xlab="Measure")
 for(i in 1:(nrow(ydf)/3)) {
-    abline(a=indiv_intercept, b=indiv_slope[i*3-1] + xbeta, col=xpalette[i*3-1], lwd=4)
+    #abline(a=indiv_intercept, b=indiv_slope[i*3-1] + xbeta, col=xpalette[i*3-1], lwd=7)
+    
+    segments(x0=1.0, y0=xfixed_intercept + (1*xxu[i]), x1=3.0, y1=xfixed_intercept + (3*xxu[i]), col=xpalette[i*3-2], lwd=7)
+    
     #segments(x0=0, y0=ydf[ i*2-1, "y"], x1=1, y1=ydf[ i*2, "y"], col=xpalette[i*2-1], lwd=4)
 }
 if(xbool_save_file) { dev.off() }
@@ -61,18 +112,24 @@ if(xbool_save_file) { dev.off() }
 
 
 
-xlmer <- lmer(y ~ measure + ( measure | id ), data=xdf)
+
+
 summary(xlmer)
-#anova(xlmer)
 
-
-
-
-xlm2 <- lm(y ~ measure, data=xdf)
+xlm2 <- lm(y ~ measure, data=ydf)
 summary(xlm2)
 
 ########### is the random slope model significantly better than using fixed effect only?
 ########### we're actually testing null that xsigRndEff = 0 (given 'measure')
 anova(xlmer, xlm2)
+
+
+###################
+
+xlmer2 <- lmer(y ~ measure + ( measure | id ) + ( 1 | id ), data=ydf)
+summary(xlmer2)
+#anova(xlmer2)
+
+anova(xlmer2, xlm2)
 
 
