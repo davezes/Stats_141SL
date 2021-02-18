@@ -4,7 +4,7 @@ options(stringAsFactor=FALSE, width=300)
 
 library(lme4)
 
-xbool_save_file <- TRUE
+xbool_save_file <- FALSE
 
 
 n <- 10
@@ -91,7 +91,7 @@ xfixed_intercept <- summary(xlmer)$coefficients[ 1, 1 ] ; xfixed_intercept
 
 ########## YES!
 coef(xlmer)$id
-xxu <- coef(xlmer)$id[ , 1]
+xxu <- coef(xlmer)$id[ , 1] ; xxu
 
 ########### or, alternately
 ranef(xlmer)$id + xfixed_intercept

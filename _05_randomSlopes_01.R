@@ -4,7 +4,7 @@ options(stringAsFactor=FALSE, width=300)
 
 library(lme4)
 
-xbool_save_file <- TRUE
+xbool_save_file <- FALSE
 
 
 n <- 15 #### must be an integer multiple of 3
