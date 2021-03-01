@@ -4,6 +4,8 @@
 ################# 100 students, 1 writen response each
 ################# For each writen response, 5 raters
 
+######### random simulation
+
 set.seed(777)
 
 N <- 100
@@ -16,7 +18,7 @@ xscore <- sample( c(1, 2, 3), 5*N, replace=TRUE )
 
 xdf <- data.frame("score"=xscore, "student"=xstudent, "rater"=xrater)
 
-head(xdf)
+head(xdf, 14)
 
 
 ############# the aov() function!
