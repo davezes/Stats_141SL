@@ -24,6 +24,7 @@ summary(m2)
 anova(m1, m2, test="Chisq")
 
 
+anova(m2, m1, test="Chisq")
 
 
 
